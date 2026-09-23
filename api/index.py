@@ -9,27 +9,7 @@ if str(BASE_DIR) not in sys.path:
 
 os.environ["VERCEL"] = "1"
 
-try:
-    from backend.main import app
-except Exception as e:
-    import traceback
-    err_msg = f"{type(e).__name__}: {str(e)}\n{traceback.format_exc()}"
-    from fastapi import FastAPI
-    from fastapi.responses import JSONResponse
-    app = FastAPI()
+from backend.main import app
 
-    @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-    def catch_all_error(path: str):
-        return JSONResponse(
-            status_code=500,
-            content={"error": "Backend initialization exception", "detail": err_msg}
-        )
-
-
-try:
-    from mangum import Mangum
-    handler = Mangum(app, lifespan="off")
-except Exception:
-    handler = app
 
 

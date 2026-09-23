@@ -441,20 +441,34 @@ async def screen_resumes_endpoint(
 def screen_sample_demo(jd_id: Optional[str] = None, db: Session = Depends(get_db)):
     """1-Click Demo Endpoint: Screens built-in sample candidates against selected sample JD in a demo session."""
     jd_path = SAMPLE_JDS_DIR / "sde.json"
-    if not os.path.exists(jd_path):
-        json_files = [f for f in os.listdir(SAMPLE_JDS_DIR) if f.endswith(".json")] if os.path.exists(SAMPLE_JDS_DIR) else []
-        if json_files:
-            jd_path = SAMPLE_JDS_DIR / json_files[0]
-        else:
-            raise HTTPException(status_code=404, detail="Sample JD not found.")
-        
-    with open(jd_path, "r", encoding="utf-8") as f:
-        jd_json = json.load(f)
+    jd_json = None
+
+    if os.path.exists(jd_path):
+        try:
+            with open(jd_path, "r", encoding="utf-8") as f:
+                jd_json = json.load(f)
+        except Exception:
+            pass
+
+    if not jd_json and os.path.exists(SAMPLE_JDS_DIR):
+        try:
+            json_files = [f for f in os.listdir(SAMPLE_JDS_DIR) if f.endswith(".json")]
+            if json_files:
+                with open(SAMPLE_JDS_DIR / json_files[0], "r", encoding="utf-8") as f:
+                    jd_json = json.load(f)
+        except Exception:
+            pass
+
+    if not jd_json:
+        jd_json = {
+            "title": "Software Development Engineer (SDE-1)",
+            "text": "Looking for a Software Development Engineer proficient in Python, C++, Data Structures, Algorithms, SQL, Docker, and REST APIs."
+        }
 
     jd, sess = get_or_create_session(
         db,
-        jd_title=jd_json["title"],
-        jd_text=jd_json["text"],
+        jd_title=jd_json.get("title", "Software Engineer"),
+        jd_text=jd_json.get("text", "Software Engineer Job Description"),
         company="Tech Corp",
         session_name="Demo_SoftwareEngineer_Drive",
         mode="temporary"
@@ -466,9 +480,22 @@ def screen_sample_demo(jd_id: Optional[str] = None, db: Session = Depends(get_db
         if os.path.exists(SAMPLE_RESUMES_DIR):
             for file in os.listdir(SAMPLE_RESUMES_DIR):
                 if file.endswith(".json"):
-                    with open(SAMPLE_RESUMES_DIR / file, "r", encoding="utf-8") as f:
-                        cand_data = json.load(f)
-                        parsed_resumes.append(parse_resume_content(cand_data["raw_text"], filename=cand_data["name"]))
+                    try:
+                        with open(SAMPLE_RESUMES_DIR / file, "r", encoding="utf-8") as f:
+                            cand_data = json.load(f)
+                            parsed_resumes.append(parse_resume_content(cand_data["raw_text"], filename=cand_data["name"]))
+                    except Exception:
+                        pass
+        
+        if not parsed_resumes:
+            parsed_resumes = [
+                parse_resume_content("Rahul Verma. B.Tech Computer Science 2024. Skills: Python, C++, SQL, Algorithms, Docker, Git.", filename="Rahul_Verma_Resume.pdf"),
+                parse_resume_content("Priya Sharma. M.Tech Artificial Intelligence 2024. Skills: Python, Machine Learning, NLP, TensorFlow, PyTorch, SQL.", filename="Priya_Sharma_Resume.pdf"),
+                parse_resume_content("Amit Patel. BCA 2024. Skills: JavaScript, TypeScript, React, Node.js, HTML, CSS, SQL.", filename="Amit_Patel_Resume.pdf"),
+                parse_resume_content("Neha Gupta. B.Tech IT 2024. Skills: Java, SQL, Selenium, Software Testing, Git.", filename="Neha_Gupta_Resume.pdf"),
+                parse_resume_content("Vikram Singh. B.Tech Mechanical 2023. Skills: AutoCAD, SolidWorks, MATLAB.", filename="Vikram_Singh_Resume.pdf")
+            ]
+
         results = persist_and_rerank_session(db, jd, sess, parsed_resumes)
     else:
         results = get_session_rankings(sess.id, db)["rankings"]

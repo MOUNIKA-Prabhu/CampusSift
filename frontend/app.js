@@ -419,6 +419,20 @@ function clearSelectedFiles() {
     renderSelectedFiles();
 }
 
+async function parseResponseError(res, defaultMsg) {
+    try {
+        const text = await res.text();
+        try {
+            const json = JSON.parse(text);
+            return json.detail || json.message || text || defaultMsg;
+        } catch {
+            return text || defaultMsg;
+        }
+    } catch {
+        return `HTTP ${res.status} Error`;
+    }
+}
+
 // Screen Uploaded Resumes
 async function processScreening() {
     const jdTitle = document.getElementById("jdTitleInput").value.trim() || currentJdTitle || "Specified Job Position";
@@ -465,8 +479,8 @@ async function processScreening() {
         });
 
         if (!res.ok) {
-            const err = await res.json();
-            throw new Error(err.detail || "Screening failed");
+            const errMsg = await parseResponseError(res, "Screening failed");
+            throw new Error(errMsg);
         }
 
         const data = await res.json();
@@ -501,8 +515,8 @@ async function runOneClickDemo() {
     try {
         const res = await fetch("/api/screen-sample-demo", { method: "POST" });
         if (!res.ok) {
-            const err = await res.json();
-            throw new Error(err.detail || "Demo failed");
+            const errMsg = await parseResponseError(res, "Demo failed");
+            throw new Error(errMsg);
         }
         const data = await res.json();
 

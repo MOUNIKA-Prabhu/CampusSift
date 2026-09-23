@@ -1,15 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "frontend/**",
-      "use": "@vercel/static"
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "sample_data/**"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",

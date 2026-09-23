@@ -1,0 +1,28 @@
+{
+  "name": "Amit Patel",
+  "email": "amit.patel@example.com",
+  "phone": "+91 9876543212",
+  "education": "BCA / MCA, 2024 (GPA: 8.4/10)",
+  "skills": [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "HTML",
+    "CSS",
+    "REST API",
+    "Git"
+  ],
+  "projects": [
+    "E-Commerce Web Portal: Fullstack app built with React, Node.js, Express, and MongoDB.",
+    "Real-time Chat App: WebSockets and React frontend with JWT authentication."
+  ],
+  "experience": "Frontend Developer Intern (6 Months): Built responsive React components and integrated REST APIs.",
+  "certifications": [
+    "Full Stack Web Development Certification",
+    "React Advanced Developer"
+  ],
+  "raw_text": "Amit Patel\nEmail: amit.patel@example.com | Phone: +91 9876543212\nEducation: BCA / MCA, 2024 (GPA: 8.4/10)\n\nSKILLS:\nJavaScript, TypeScript, React, Node.js, Express, MongoDB, HTML, CSS, REST API, Git\n\nEXPERIENCE:\nFrontend Developer Intern (6 Months): Built responsive React components and integrated REST APIs.\n\nPROJECTS:\n- E-Commerce Web Portal: Fullstack app built with React, Node.js, Express, and MongoDB.\n- Real-time Chat App: WebSockets and React frontend with JWT authentication.\n\nCERTIFICATIONS:\n- Full Stack Web Development Certification\n- React Advanced Developer"
+}

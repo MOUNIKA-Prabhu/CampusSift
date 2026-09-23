@@ -1,0 +1,27 @@
+{
+  "name": "Priya Sharma",
+  "email": "priya.sharma@example.com",
+  "phone": "+91 9876543211",
+  "education": "M.Tech in Artificial Intelligence, 2024 (GPA: 9.1/10)",
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "NLP",
+    "PyTorch",
+    "TensorFlow",
+    "Scikit-Learn",
+    "Pandas",
+    "NumPy",
+    "SQL"
+  ],
+  "projects": [
+    "Automated Sentiment Classifier: Fine-tuned BERT model for movie reviews with 94% accuracy.",
+    "Resume Screening Engine: Applied TF-IDF and Cosine Similarity for document comparison."
+  ],
+  "experience": "AI Research Intern (5 Months): Implemented NLP transformers for document entity extraction.",
+  "certifications": [
+    "Deep Learning Specialization - Coursera",
+    "TensorFlow Developer Certificate"
+  ],
+  "raw_text": "Priya Sharma\nEmail: priya.sharma@example.com | Phone: +91 9876543211\nEducation: M.Tech in Artificial Intelligence, 2024 (GPA: 9.1/10)\n\nSKILLS:\nPython, Machine Learning, NLP, PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, SQL\n\nEXPERIENCE:\nAI Research Intern (5 Months): Implemented NLP transformers for document entity extraction.\n\nPROJECTS:\n- Automated Sentiment Classifier: Fine-tuned BERT model for movie reviews with 94% accuracy.\n- Resume Screening Engine: Applied TF-IDF and Cosine Similarity for document comparison.\n\nCERTIFICATIONS:\n- Deep Learning Specialization - Coursera\n- TensorFlow Developer Certificate"
+}

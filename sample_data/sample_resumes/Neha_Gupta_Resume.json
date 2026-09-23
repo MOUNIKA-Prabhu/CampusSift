@@ -1,0 +1,24 @@
+{
+  "name": "Neha Gupta",
+  "email": "neha.gupta@example.com",
+  "phone": "+91 9876543213",
+  "education": "B.Tech in Information Technology, 2024 (GPA: 7.9/10)",
+  "skills": [
+    "Java",
+    "SQL",
+    "Selenium",
+    "Manual Testing",
+    "Git",
+    "HTML",
+    "Agile"
+  ],
+  "projects": [
+    "Automated E2E Test Suite: Developed Selenium test automation scripts for web portals.",
+    "Bug Tracking Dashboard: HTML/CSS front-end portal for bug reporting."
+  ],
+  "experience": "QA Engineering Intern (4 Months): Executed test cases and performed regression testing.",
+  "certifications": [
+    "ISTQB Foundation Level Certification"
+  ],
+  "raw_text": "Neha Gupta\nEmail: neha.gupta@example.com | Phone: +91 9876543213\nEducation: B.Tech in Information Technology, 2024 (GPA: 7.9/10)\n\nSKILLS:\nJava, SQL, Selenium, Manual Testing, Git, HTML, Agile\n\nEXPERIENCE:\nQA Engineering Intern (4 Months): Executed test cases and performed regression testing.\n\nPROJECTS:\n- Automated E2E Test Suite: Developed Selenium test automation scripts for web portals.\n- Bug Tracking Dashboard: HTML/CSS front-end portal for bug reporting.\n\nCERTIFICATIONS:\n- ISTQB Foundation Level Certification"
+}

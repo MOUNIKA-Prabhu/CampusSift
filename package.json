@@ -1,0 +1,21 @@
+{
+  "name": "llm-resume-screening-platform",
+  "version": "1.0.0",
+  "description": "LLM-Powered Resume Screening & Talent Matching Platform with Firebase Integration",
+  "main": "frontend/app.js",
+  "scripts": {
+    "start": "python run.py"
+  },
+  "dependencies": {
+    "firebase": "^10.14.1"
+  },
+  "keywords": [
+    "llm",
+    "resume-screening",
+    "firebase",
+    "firestore",
+    "talent-matching"
+  ],
+  "author": "",
+  "license": "ISC"
+}

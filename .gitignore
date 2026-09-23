@@ -1,0 +1,28 @@
+# Environment & Secrets
+.env
+.env.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Database & Local Storage
+*.db
+*.sqlite
+*.sqlite3
+talentmatch.db
+
+# IDE / System
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,26 @@
+{
+  "name": "Rahul Verma",
+  "email": "rahul.verma@example.com",
+  "phone": "+91 9876543210",
+  "education": "B.Tech in Computer Science, 2024 (GPA: 8.8/10)",
+  "skills": [
+    "Python",
+    "C++",
+    "SQL",
+    "REST API",
+    "Docker",
+    "Git",
+    "Data Structures",
+    "FastAPI"
+  ],
+  "projects": [
+    "Microservices Billing System: Built using Python FastAPI, PostgreSQL, and Docker.",
+    "Algorithm Visualizer: Web application built with JavaScript and Data Structures."
+  ],
+  "experience": "SDE Intern at TechCorp (6 Months): Developed backend APIs using Python and REST framework.",
+  "certifications": [
+    "AWS Certified Cloud Practitioner",
+    "Python Backend Mastery"
+  ],
+  "raw_text": "Rahul Verma\nEmail: rahul.verma@example.com | Phone: +91 9876543210\nEducation: B.Tech in Computer Science, 2024 (GPA: 8.8/10)\n\nSKILLS:\nPython, C++, SQL, REST API, Docker, Git, Data Structures, FastAPI\n\nEXPERIENCE:\nSDE Intern at TechCorp (6 Months): Developed backend APIs using Python and REST framework.\n\nPROJECTS:\n- Microservices Billing System: Built using Python FastAPI, PostgreSQL, and Docker.\n- Algorithm Visualizer: Web application built with JavaScript and Data Structures.\n\nCERTIFICATIONS:\n- AWS Certified Cloud Practitioner\n- Python Backend Mastery"
+}

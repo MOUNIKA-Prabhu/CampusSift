@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Resume Screening & Talent Matching Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="dark-theme">
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <div class="brand-icon"><i class="fa-solid fa-brain-circuit"></i></div>
+            <div class="brand-text">
+                <h2>TalentMatch AI</h2>
+                <span class="sub-text">LLM Resume Screening & Recruitment Platform</span>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <button class="btn btn-primary demo-btn" onclick="runOneClickDemo()">
+                <i class="fa-solid fa-bolt"></i> 1-Click Examiner Demo
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="app-layout">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="tab-overview">
+                    <i class="fa-solid fa-chart-pie"></i> Overview
+                </button>
+                <button class="nav-item" data-tab="tab-jd">
+                    <i class="fa-solid fa-briefcase"></i> 1. Job Description & Session
+                </button>
+                <button class="nav-item" data-tab="tab-upload">
+                    <i class="fa-solid fa-file-pdf"></i> 2. Resumes Upload
+                </button>
+                <button class="nav-item" data-tab="tab-ranking">
+                    <i class="fa-solid fa-ranking-star"></i> 3. Talent Ranking
+                </button>
+                <button class="nav-item" data-tab="tab-evaluation">
+                    <i class="fa-solid fa-vial-circle-check"></i> 4. Model Evaluation
+                </button>
+            </nav>
+
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+
+            <!-- TAB 1: OVERVIEW -->
+            <section id="tab-overview" class="tab-pane active">
+                <div class="hero-banner">
+                    <div class="hero-content">
+                        <h1>LLM-Powered Resume Screening & Talent Matching</h1>
+                        <p>An automated, persistent NLP candidate evaluation platform for campus placement drives and recruitment sessions. Built using Cosine Similarity, Skill Gap Analysis, and Generative AI.</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="switchTab('tab-jd')">Get Started <i class="fa-solid fa-arrow-right"></i></button>
+                            <button class="btn btn-secondary" onclick="runOneClickDemo()"><i class="fa-solid fa-play"></i> Run Live Demo</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <h3><i class="fa-solid fa-diagram-project"></i> Core System Architecture & Workflow</h3>
+                </div>
+
+                <div class="workflow-grid">
+                    <div class="workflow-card">
+                        <div class="wf-number">01</div>
+                        <i class="fa-solid fa-folder-tree icon"></i>
+                        <h4>Recruitment Session & Mode</h4>
+                        <p>Create persistent or temporary screening sessions with independent candidate datasets.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="wf-number">02</div>
+                        <i class="fa-solid fa-file-pdf icon"></i>
+                        <h4>Multi-Resume PDF Upload</h4>
+                        <p>Upload single or bulk candidate resumes with real-time text parsing & size validation.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="wf-number">03</div>
+                        <i class="fa-solid fa-vector-square icon"></i>
+                        <h4>Vector Embeddings</h4>
+                        <p>Compute multi-factor similarity (Semantic TF-IDF + Skill Match + Qualifications).</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="wf-number">04</div>
+                        <i class="fa-solid fa-ranking-star icon"></i>
+                        <h4>Persistent Session Ranking</h4>
+                        <p>New candidate uploads are appended and re-ranked across ALL candidates in the drive.</p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="wf-number">05</div>
+                        <i class="fa-solid fa-file-excel icon"></i>
+                        <h4>Export & One-Click Cleanup</h4>
+                        <p>Export Top N candidates to Excel/CSV and clear temporary screening sessions safely.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: JOB DESCRIPTION & SESSION -->
+            <section id="tab-jd" class="tab-pane">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-briefcase"></i> Step 1: Job Description & Recruitment Session Setup</h2>
+                    <p>Select a pre-built campus job role or create a custom recruitment drive.</p>
+                </div>
+
+                <div class="grid-2col">
+                    <div class="card">
+                        <h3>Select Pre-Built Job Position</h3>
+                        <div class="sample-jd-buttons mb-3" id="sampleJdList">
+                            <!-- Loaded via JS -->
+                        </div>
+
+                        <div class="form-group mt-3" style="border-top:1px solid var(--border-color); padding-top:1rem;">
+                            <label><i class="fa-solid fa-clock-rotate-left text-blue"></i> Load Existing Session</label>
+                            <select id="activeSessionSelect" class="form-control" onchange="switchSession(this.value)">
+                                <option value="">-- Select Active Session --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Session & Position Details</h3>
+                        <div class="grid-2col" style="gap:0.75rem;">
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" id="companyInput" class="form-control" placeholder="e.g. ABC Corp" value="ABC Corp">
+                            </div>
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" id="jdTitleInput" class="form-control" placeholder="e.g. Python Developer">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Session Identifier</label>
+                            <input type="text" id="sessionNameInput" class="form-control" placeholder="e.g. ABC_PythonDeveloper_2026">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Screening Mode</label>
+                            <div class="mode-toggle-group">
+                                <label class="mode-option active" id="modePersistentLbl">
+                                    <input type="radio" name="screeningMode" value="persistent" checked onchange="updateModeUI()">
+                                    <div>
+                                        <strong><i class="fa-solid fa-database text-green"></i> Normal / Persistent</strong>
+                                        <div style="font-size:0.75rem; color:var(--text-muted);">Saved permanently in DB & Cloud</div>
+                                    </div>
+                                </label>
+                                <label class="mode-option" id="modeTemporaryLbl">
+                                    <input type="radio" name="screeningMode" value="temporary" onchange="updateModeUI()">
+                                    <div>
+                                        <strong><i class="fa-solid fa-bolt text-amber"></i> Temporary Screening</strong>
+                                        <div style="font-size:0.75rem; color:var(--text-muted);">Drive session intended for single review</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Job Description Text</label>
+                            <textarea id="jdTextInput" class="form-control" rows="8" placeholder="Paste full Job Description text here..."></textarea>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="confirmSessionSetup()">
+                            Next: Upload Resumes <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: RESUMES UPLOAD -->
+            <section id="tab-upload" class="tab-pane">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-file-pdf"></i> Step 2: Multiple Candidate Resumes Upload</h2>
+                    <p>Upload 1, 5, 10, 20 or more PDF resumes into the current recruitment session.</p>
+                </div>
+
+                <div class="grid-2col">
+                    <div class="card">
+                        <h3>Upload PDF Resumes</h3>
+                        <div class="dropzone" id="dropzone" onclick="document.getElementById('pdfFileInput').click()">
+                            <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+                            <h4>Drag & Drop Multiple PDF Resumes here</h4>
+                            <p>or click to browse from your computer (PDF only)</p>
+                            <input type="file" id="pdfFileInput" multiple accept=".pdf" style="display: none;" onchange="handleFileSelect(event)">
+                        </div>
+
+                        <div id="uploadValidationError" class="alert alert-red mt-2" style="display:none; padding:0.6rem; background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius-sm); font-size:0.85rem; color:var(--red);"></div>
+
+                        <div class="file-list-header mt-3" style="display:flex; justify-content:space-between; align-items:center;">
+                            <h4 style="font-size:0.9rem;" id="selectedFilesSummaryHeader">Selected Resumes: 0 files</h4>
+                            <button id="btnClearFiles" class="btn btn-secondary" style="padding:0.2rem 0.5rem; font-size:0.75rem; display:none;" onclick="clearSelectedFiles()">Clear List</button>
+                        </div>
+
+                        <div class="file-list" id="selectedFileList">
+                            <span class="no-files">No files uploaded yet.</span>
+                        </div>
+
+                        <div id="uploadProgressNotice" class="text-center py-2 mt-2" style="display:none; font-size:0.85rem; color:var(--amber);">
+                            <i class="fa-solid fa-spinner fa-spin me-1"></i> <span id="uploadProgressText">Processing candidate resumes...</span>
+                        </div>
+
+                        <div class="card-footer mt-3">
+                            <button class="btn btn-primary" id="btnStartScreening" onclick="processScreening()" style="width:100%; justify-content:center;">
+                                <i class="fa-solid fa-play"></i> [ Screen Resumes & Calculate Ranking ]
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Demo Mode: Load Sample Resumes</h3>
+                        <p class="text-muted">Use pre-generated campus resumes representing High, Medium, and Low candidate profiles.</p>
+                        <div class="sample-resumes-list" id="sampleResumesList">
+                            <!-- Loaded via JS -->
+                        </div>
+                        <button class="btn btn-secondary mt-3" onclick="runOneClickDemo()">
+                            <i class="fa-solid fa-bolt text-green"></i> Run 1-Click Examiner Demo
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: TALENT RANKING & RESULTS -->
+            <section id="tab-ranking" class="tab-pane">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-ranking-star"></i> Candidate Screening & Persistent Leaderboard</h2>
+                    <p id="rankingSubTitle">Select a position and upload resumes to calculate candidate rankings.</p>
+                </div>
+
+                <div id="resultsLoader" class="loader-container" style="display: none;">
+                    <div class="spinner"></div>
+                    <p id="loaderMessageText">Parsing PDF Resumes, Computing Embeddings & Cosine Similarity...</p>
+                </div>
+
+                <div id="resultsContent">
+                    <div class="card">
+                        <div class="card-header-flex">
+                            <div>
+                                <h3 style="margin-bottom:0.2rem;">Candidate Leaderboard</h3>
+                                <span class="badge" id="activeSessionBadge" style="background:var(--bg-dark); border:1px solid var(--border-color); padding:0.25rem 0.6rem; font-size:0.75rem; color:var(--text-secondary);">Session: None</span>
+                            </div>
+                            
+                            <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+                                <input type="text" id="candidateSearchInput" class="form-control" placeholder="🔍 Search name or skill..." style="width:200px; padding:0.4rem 0.8rem; font-size:0.85rem;" oninput="filterCandidateTable()">
+                                <div class="badge badge-info" id="candidateCountBadge">0 Candidates Ranked</div>
+                                <button class="btn btn-secondary" style="padding:0.35rem 0.75rem; font-size:0.8rem;" onclick="saveCurrentSessionToCloud()" title="Save current session to Firebase Firestore">
+                                    <i class="fa-solid fa-cloud-arrow-up text-amber"></i> Save to Cloud
+                                </button>
+                                <button class="btn btn-secondary" style="padding:0.35rem 0.75rem; font-size:0.8rem;" onclick="openFirebaseHistoryModal()" title="View history of screenings saved in Firebase Cloud">
+                                    <i class="fa-solid fa-box-archive text-blue"></i> Cloud History
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="ranking-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Candidate Name</th>
+                                        <th>Match Score</th>
+                                        <th>Matching Skills</th>
+                                        <th>Missing Skills</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rankingTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4">No screening performed yet. Click "1-Click Examiner Demo" or upload files.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recruiter Actions Panel (Export & Cleanup) -->
+                    <div class="recruiter-actions-card">
+                        <div class="export-controls">
+                            <strong style="font-size:0.9rem;"><i class="fa-solid fa-file-export text-blue"></i> Recruiter Actions:</strong>
+                            <div class="export-mode-selector">
+                                <label style="cursor:pointer;"><input type="radio" name="exportScope" value="all" checked onchange="toggleExportCountInput()"> All Candidates</label>
+                                <label style="cursor:pointer;"><input type="radio" name="exportScope" value="top_n" onchange="toggleExportCountInput()"> Top N Candidates</label>
+                                <input type="number" id="exportTopNInput" class="form-control" value="50" min="1" max="500" style="width:75px; padding:0.25rem 0.5rem; font-size:0.85rem; display:none;">
+                            </div>
+                            <button class="btn btn-primary" style="padding:0.4rem 0.9rem; font-size:0.85rem;" onclick="exportResults('excel')">
+                                <i class="fa-solid fa-file-excel"></i> Export Excel
+                            </button>
+                            <button class="btn btn-secondary" style="padding:0.4rem 0.9rem; font-size:0.85rem;" onclick="exportResults('csv')">
+                                <i class="fa-solid fa-file-csv"></i> Export CSV
+                            </button>
+                        </div>
+
+                        <div style="display:flex; gap:0.5rem;">
+                            <button class="btn btn-danger-outline" style="padding:0.4rem 0.9rem; font-size:0.85rem;" onclick="confirmClearSession()">
+                                <i class="fa-solid fa-trash-can"></i> Clear Ranking
+                            </button>
+                            <button class="btn btn-danger-outline" style="padding:0.4rem 0.9rem; font-size:0.85rem;" onclick="confirmClearAll()">
+                                <i class="fa-solid fa-trash-arrow-up"></i> Clear All Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: MODEL EVALUATION -->
+            <section id="tab-evaluation" class="tab-pane">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-vial-circle-check"></i> System Accuracy & Evaluation Report</h2>
+                    <p>Comparison of model recommendations against manually labeled ground-truth campus placement dataset.</p>
+                    <div class="evaluation-note-badge mt-2" id="evalDatasetInfo">
+                        <i class="fa-solid fa-database"></i> <strong>Evaluation Dataset:</strong> <span id="valTotalPairs">8</span> manually labelled resume-JD pairs across <span id="valTotalJobs">2</span> campus job positions.
+                    </div>
+                </div>
+
+                <div class="metrics-grid" id="metricsCards">
+                    <div class="metric-card">
+                        <div class="metric-value" id="valPrecision">0.0%</div>
+                        <div class="metric-label">Precision</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="valRecall">0.0%</div>
+                        <div class="metric-label">Recall</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="valF1">0.0%</div>
+                        <div class="metric-label">F1-Score</div>
+                    </div>
+                    <div class="metric-card highlight">
+                        <div class="metric-value" id="valTop1">0.0%</div>
+                        <div class="metric-label">Top-1 Ranking Accuracy</div>
+                    </div>
+                    <div class="metric-card highlight">
+                        <div class="metric-value" id="valTop3">0.0%</div>
+                        <div class="metric-label">Top-3 Ranking Accuracy</div>
+                    </div>
+                </div>
+
+                <div class="grid-2col mt-4">
+                    <div class="card">
+                        <h3>Confusion Matrix</h3>
+                        <div class="confusion-matrix">
+                            <div class="cm-box tp">
+                                <span class="cm-val" id="cmTP">0</span>
+                                <span class="cm-lbl">True Positives (TP)</span>
+                            </div>
+                            <div class="cm-box fp">
+                                <span class="cm-val" id="cmFP">0</span>
+                                <span class="cm-lbl">False Positives (FP)</span>
+                            </div>
+                            <div class="cm-box fn">
+                                <span class="cm-val" id="cmFN">0</span>
+                                <span class="cm-lbl">False Negatives (FN)</span>
+                            </div>
+                            <div class="cm-box tn">
+                                <span class="cm-val" id="cmTN">0</span>
+                                <span class="cm-lbl">True Negatives (TN)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Evaluation Methodology</h3>
+                        <ul class="methodology-list" style="margin-left:1.2rem; line-height:1.8; color:var(--text-secondary); font-size:0.9rem;">
+                            <li><strong>Ground Truth Dataset:</strong> Manually labeled resume–JD pairs with expert relevance tags.</li>
+                            <li><strong>Relevance Threshold:</strong> Candidates with overall match score &ge; 50% classified as relevant.</li>
+                            <li><strong>Top-1 Accuracy:</strong> Checks if ground-truth top candidate is ranked #1 by the model.</li>
+                            <li><strong>Top-3 Accuracy:</strong> Checks if top ground-truth candidate is included in top-3 predictions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <h3>Benchmark Test Cases Breakdown</h3>
+                    <div class="table-responsive">
+                        <table class="ranking-table">
+                            <thead>
+                                <tr>
+                                    <th>Target Position</th>
+                                    <th>Ground Truth Top Candidate</th>
+                                    <th>Predicted Top Candidate</th>
+                                    <th>Top-1 Match</th>
+                                    <th>Top-3 Match</th>
+                                </tr>
+                            </thead>
+                            <tbody id="evalTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Candidate Detail Drawer / Modal -->
+    <div class="modal-backdrop" id="candidateModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalCandName">Candidate Name</h2>
+                    <span class="badge badge-primary" id="modalCandRank">Rank #1</span>
+                </div>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="score-card-header">
+                    <div class="score-overall-box">
+                        <div class="score-label-sub">Overall Match Score</div>
+                        <div class="large-score" id="modalOverallScore">85%</div>
+                    </div>
+                    <div class="score-breakdown-grid">
+                        <div class="score-item">Semantic Similarity: <strong id="modalSemScore">80%</strong></div>
+                        <div class="score-item">Skill Coverage: <strong id="modalSkillScore">90%</strong></div>
+                        <div class="score-item">Education: <strong id="modalEduScore">100%</strong></div>
+                        <div class="score-item">Experience: <strong id="modalExpScore">70%</strong></div>
+                        <div class="score-item">Project Relevance: <strong id="modalProjScore">75%</strong></div>
+                    </div>
+                </div>
+
+                <div class="explainability-box mb-3" style="background:var(--bg-dark); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+                    <h4><i class="fa-solid fa-lightbulb text-amber"></i> Why this candidate matches the role</h4>
+                    <p id="modalExplanationText" style="font-size:0.9rem; color:var(--text-secondary); margin-top:0.3rem;">Explanation text goes here...</p>
+                </div>
+
+                <div class="grid-2col mt-3">
+                    <div>
+                        <h4><i class="fa-solid fa-circle-check text-green"></i> Matching Skills</h4>
+                        <div class="pills-container mt-2" id="modalMatchingPills"></div>
+                    </div>
+                    <div>
+                        <h4><i class="fa-solid fa-circle-xmark text-red"></i> Missing Skills (Skill Gaps)</h4>
+                        <div class="pills-container mt-2" id="modalMissingPills"></div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <h4><i class="fa-solid fa-graduation-cap text-blue"></i> Education, Experience & Profile</h4>
+                    <div id="modalEducationText" class="text-muted mt-2" style="font-size:0.9rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Cloud History Modal -->
+    <div id="firebaseHistoryModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content" style="max-width: 650px;">
+            <div class="modal-header">
+                <div>
+                    <h3 style="display:flex; align-items:center; gap:0.5rem;"><i class="fa-solid fa-fire text-amber"></i> Firebase Cloud Screening History</h3>
+                    <div style="font-size:0.8rem; color:var(--text-secondary);">Project: talentmatch-ai-ff4b3 | Real-time Cloud Sync</div>
+                </div>
+                <button class="close-btn" onclick="closeFirebaseModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="firebaseHistoryLoading" class="text-center py-3 text-muted">
+                    <div class="spinner" style="width:24px; height:24px; border-width:2px; margin:0 auto 0.5rem;"></div>
+                    Fetching saved cloud screenings from Firebase Firestore...
+                </div>
+                <div id="firebaseHistoryList" style="max-height:400px; overflow-y:auto; padding-right:4px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Session Confirmation Modal -->
+    <div id="clearSessionModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content" style="max-width: 500px; text-align:center;">
+            <div style="font-size:2.5rem; color:var(--amber); margin-bottom:0.5rem;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h3>Clear this screening session?</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin:0.8rem 0 1.5rem;">
+                This will remove the current resumes, ranking results, and temporary screening data for session <strong id="clearSessionNameText" style="color:var(--text-primary);">Current Session</strong>.
+            </p>
+            <div style="display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;">
+                <button class="btn btn-secondary" onclick="closeClearSessionModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="exportAndClearSession()"><i class="fa-solid fa-download"></i> Export First</button>
+                <button class="btn btn-danger" onclick="executeClearSession()"><i class="fa-solid fa-trash-can"></i> Clear Ranking</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear All Confirmation Modal -->
+    <div id="clearAllModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content" style="max-width: 500px; text-align:center;">
+            <div style="font-size:2.5rem; color:var(--red); margin-bottom:0.5rem;"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <h3>Are you sure you want to clear all screening data?</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin:0.8rem 0 1.5rem;">
+                This will permanently remove <strong>ALL recruitment-session data</strong> across the entire database platform. This action cannot be undone.
+            </p>
+            <div style="display:flex; justify-content:center; gap:0.8rem;">
+                <button class="btn btn-secondary" onclick="closeClearAllModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="executeClearAll()"><i class="fa-solid fa-trash-arrow-up"></i> Clear Everything</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Service Module -->
+    <script type="module" src="/static/firebase-service.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>

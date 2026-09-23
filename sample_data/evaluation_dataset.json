@@ -1,0 +1,56 @@
+[
+  {
+    "job_title": "Software Development Engineer (SDE-1)",
+    "jd_text": "Job Title: Software Development Engineer (SDE-1)\nLocation: Campus Hiring / Remote\n\nAbout the Role:\nWe are looking for an energetic SDE-1 to join our backend engineering team.\n\nRequired Qualifications:\n- Bachelor's degree in Computer Science, B.Tech, or B.E.\n- Strong proficiency in Python, C++, SQL, and REST APIs.\n- Experience with Git, Data Structures, Algorithms, and Docker.\n- Knowledge of cloud services like AWS or GCP is a plus.\n- Good understanding of Software Development Life Cycle (SDLC) and Agile methodologies.\n",
+    "ground_truth_top_candidate": "Rahul Verma",
+    "candidates": [
+      {
+        "name": "Rahul Verma",
+        "resume_text": "Rahul Verma\nEmail: rahul.verma@example.com | Phone: +91 9876543210\nEducation: B.Tech in Computer Science, 2024 (GPA: 8.8/10)\n\nSKILLS:\nPython, C++, SQL, REST API, Docker, Git, Data Structures, FastAPI\n\nEXPERIENCE:\nSDE Intern at TechCorp (6 Months): Developed backend APIs using Python and REST framework.\n\nPROJECTS:\n- Microservices Billing System: Built using Python FastAPI, PostgreSQL, and Docker.\n- Algorithm Visualizer: Web application built with JavaScript and Data Structures.\n\nCERTIFICATIONS:\n- AWS Certified Cloud Practitioner\n- Python Backend Mastery",
+        "ground_truth_relevant": true
+      },
+      {
+        "name": "Priya Sharma",
+        "resume_text": "Priya Sharma\nEmail: priya.sharma@example.com | Phone: +91 9876543211\nEducation: M.Tech in Artificial Intelligence, 2024 (GPA: 9.1/10)\n\nSKILLS:\nPython, Machine Learning, NLP, PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, SQL\n\nEXPERIENCE:\nAI Research Intern (5 Months): Implemented NLP transformers for document entity extraction.\n\nPROJECTS:\n- Automated Sentiment Classifier: Fine-tuned BERT model for movie reviews with 94% accuracy.\n- Resume Screening Engine: Applied TF-IDF and Cosine Similarity for document comparison.\n\nCERTIFICATIONS:\n- Deep Learning Specialization - Coursera\n- TensorFlow Developer Certificate",
+        "ground_truth_relevant": true
+      },
+      {
+        "name": "Amit Patel",
+        "resume_text": "Amit Patel\nEmail: amit.patel@example.com | Phone: +91 9876543212\nEducation: BCA / MCA, 2024 (GPA: 8.4/10)\n\nSKILLS:\nJavaScript, TypeScript, React, Node.js, Express, MongoDB, HTML, CSS, REST API, Git\n\nEXPERIENCE:\nFrontend Developer Intern (6 Months): Built responsive React components and integrated REST APIs.\n\nPROJECTS:\n- E-Commerce Web Portal: Fullstack app built with React, Node.js, Express, and MongoDB.\n- Real-time Chat App: WebSockets and React frontend with JWT authentication.\n\nCERTIFICATIONS:\n- Full Stack Web Development Certification\n- React Advanced Developer",
+        "ground_truth_relevant": true
+      },
+      {
+        "name": "Neha Gupta",
+        "resume_text": "Neha Gupta\nEmail: neha.gupta@example.com | Phone: +91 9876543213\nEducation: B.Tech in Information Technology, 2024 (GPA: 7.9/10)\n\nSKILLS:\nJava, SQL, Selenium, Manual Testing, Git, HTML, Agile\n\nEXPERIENCE:\nQA Engineering Intern (4 Months): Executed test cases and performed regression testing.\n\nPROJECTS:\n- Automated E2E Test Suite: Developed Selenium test automation scripts for web portals.\n- Bug Tracking Dashboard: HTML/CSS front-end portal for bug reporting.\n\nCERTIFICATIONS:\n- ISTQB Foundation Level Certification",
+        "ground_truth_relevant": false
+      },
+      {
+        "name": "Vikram Singh",
+        "resume_text": "Vikram Singh\nEmail: vikram.singh@example.com | Phone: +91 9876543214\nEducation: B.Tech in Mechanical Engineering, 2023 (GPA: 7.2/10)\n\nSKILLS:\nAutoCAD, SolidWorks, MATLAB, Thermodynamics, Manufacturing\n\nEXPERIENCE:\nMechanical Apprentice (6 Months): Handled plant maintenance and machinery CAD design.\n\nPROJECTS:\n- Design of HVAC Cooling Tower: CAD modeling and thermal stress simulation in SolidWorks.\n- Solar Panel Mounting Frame Optimization: Structural analysis.\n\nCERTIFICATIONS:\n- Certified SolidWorks Professional (CSWP)",
+        "ground_truth_relevant": false
+      }
+    ]
+  },
+  {
+    "job_title": "Data Scientist / Machine Learning Engineer",
+    "jd_text": "Job Title: Data Scientist / Machine Learning Engineer\nLocation: Campus Hiring\n\nAbout the Role:\nWe are seeking a Junior Data Scientist to build NLP models and predictive analytics pipelines.\n\nRequired Qualifications:\n- B.Tech / M.Tech / M.S. in Computer Science, Data Science, or AI.\n- Expertise in Python, TensorFlow, PyTorch, Scikit-Learn, and NLP.\n- Strong knowledge of Data Analysis, Pandas, NumPy, Statistics, and SQL.\n- Experience with Deep Learning, Computer Vision, and model deployment.\n",
+    "ground_truth_top_candidate": "Priya Sharma",
+    "candidates": [
+      {
+        "name": "Priya Sharma",
+        "resume_text": "Priya Sharma\nEmail: priya.sharma@example.com | Phone: +91 9876543211\nEducation: M.Tech in Artificial Intelligence, 2024 (GPA: 9.1/10)\n\nSKILLS:\nPython, Machine Learning, NLP, PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, SQL\n\nEXPERIENCE:\nAI Research Intern (5 Months): Implemented NLP transformers for document entity extraction.\n\nPROJECTS:\n- Automated Sentiment Classifier: Fine-tuned BERT model for movie reviews with 94% accuracy.\n- Resume Screening Engine: Applied TF-IDF and Cosine Similarity for document comparison.\n\nCERTIFICATIONS:\n- Deep Learning Specialization - Coursera\n- TensorFlow Developer Certificate",
+        "ground_truth_relevant": true
+      },
+      {
+        "name": "Rahul Verma",
+        "resume_text": "Rahul Verma\nEmail: rahul.verma@example.com | Phone: +91 9876543210\nEducation: B.Tech in Computer Science, 2024 (GPA: 8.8/10)\n\nSKILLS:\nPython, C++, SQL, REST API, Docker, Git, Data Structures, FastAPI\n\nEXPERIENCE:\nSDE Intern at TechCorp (6 Months): Developed backend APIs using Python and REST framework.\n\nPROJECTS:\n- Microservices Billing System: Built using Python FastAPI, PostgreSQL, and Docker.\n- Algorithm Visualizer: Web application built with JavaScript and Data Structures.\n\nCERTIFICATIONS:\n- AWS Certified Cloud Practitioner\n- Python Backend Mastery",
+        "ground_truth_relevant": true
+      },
+      {
+        "name": "Vikram Singh",
+        "resume_text": "Vikram Singh\nEmail: vikram.singh@example.com | Phone: +91 9876543214\nEducation: B.Tech in Mechanical Engineering, 2023 (GPA: 7.2/10)\n\nSKILLS:\nAutoCAD, SolidWorks, MATLAB, Thermodynamics, Manufacturing\n\nEXPERIENCE:\nMechanical Apprentice (6 Months): Handled plant maintenance and machinery CAD design.\n\nPROJECTS:\n- Design of HVAC Cooling Tower: CAD modeling and thermal stress simulation in SolidWorks.\n- Solar Panel Mounting Frame Optimization: Structural analysis.\n\nCERTIFICATIONS:\n- Certified SolidWorks Professional (CSWP)",
+        "ground_truth_relevant": false
+      }
+    ]
+  }
+]

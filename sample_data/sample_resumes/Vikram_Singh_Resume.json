@@ -1,0 +1,22 @@
+{
+  "name": "Vikram Singh",
+  "email": "vikram.singh@example.com",
+  "phone": "+91 9876543214",
+  "education": "B.Tech in Mechanical Engineering, 2023 (GPA: 7.2/10)",
+  "skills": [
+    "AutoCAD",
+    "SolidWorks",
+    "MATLAB",
+    "Thermodynamics",
+    "Manufacturing"
+  ],
+  "projects": [
+    "Design of HVAC Cooling Tower: CAD modeling and thermal stress simulation in SolidWorks.",
+    "Solar Panel Mounting Frame Optimization: Structural analysis."
+  ],
+  "experience": "Mechanical Apprentice (6 Months): Handled plant maintenance and machinery CAD design.",
+  "certifications": [
+    "Certified SolidWorks Professional (CSWP)"
+  ],
+  "raw_text": "Vikram Singh\nEmail: vikram.singh@example.com | Phone: +91 9876543214\nEducation: B.Tech in Mechanical Engineering, 2023 (GPA: 7.2/10)\n\nSKILLS:\nAutoCAD, SolidWorks, MATLAB, Thermodynamics, Manufacturing\n\nEXPERIENCE:\nMechanical Apprentice (6 Months): Handled plant maintenance and machinery CAD design.\n\nPROJECTS:\n- Design of HVAC Cooling Tower: CAD modeling and thermal stress simulation in SolidWorks.\n- Solar Panel Mounting Frame Optimization: Structural analysis.\n\nCERTIFICATIONS:\n- Certified SolidWorks Professional (CSWP)"
+}

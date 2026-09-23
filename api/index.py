@@ -12,28 +12,33 @@ os.environ["VERCEL"] = "1"
 
 app = FastAPI()
 
-import_results = {}
-
-def check_import(mod_name):
-    try:
-        __import__(mod_name)
-        import_results[mod_name] = "SUCCESS"
-    except Exception as e:
-        import_results[mod_name] = f"FAILED: {type(e).__name__}: {str(e)}\n{traceback.format_exc()}"
-
-check_import("backend.config")
-check_import("backend.resume_parser")
-check_import("backend.ranking_service")
-check_import("backend.evaluation")
-check_import("backend.nlp_llm_service")
-check_import("backend.database")
-check_import("backend.models")
-check_import("backend.main")
-
 @app.get("/api/diagnostic")
 @app.get("/diagnostic")
 def diagnostic():
+    import_results = {}
+
+    def check_import(mod_name):
+        try:
+            __import__(mod_name)
+            import_results[mod_name] = "SUCCESS"
+        except Exception as e:
+            import_results[mod_name] = f"FAILED: {type(e).__name__}: {str(e)}\n{traceback.format_exc()}"
+
+    mods = [
+        "backend.config",
+        "backend.resume_parser",
+        "backend.ranking_service",
+        "backend.evaluation",
+        "backend.nlp_llm_service",
+        "backend.database",
+        "backend.models",
+        "backend.main"
+    ]
+    for mod in mods:
+        check_import(mod)
+
     return import_results
+
 
 
 

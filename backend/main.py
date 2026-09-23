@@ -3,7 +3,7 @@ import re
 import json
 from pathlib import Path
 from typing import List, Optional, Dict, Any, Tuple
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends
+from fastapi import FastAPI, APIRouter, UploadFile, File, Form, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
@@ -23,6 +23,9 @@ app = FastAPI(
     description="Campus placement candidate screening & talent matching engine",
     version="1.0.0"
 )
+
+router = APIRouter()
+
 
 MAX_TOTAL_UPLOAD_SIZE = 10 * 1024 * 1024  # 10 MB upload batch limit
 
@@ -215,7 +218,7 @@ def persist_and_rerank_session(
 
     return results
 
-@app.get("/api/health")
+@router.get("/health")
 def health_check():
     engine_name = "LLM + Semantic Matching" if llm_service.gemini_available else "Offline NLP Rule Engine"
     return {
@@ -225,7 +228,7 @@ def health_check():
         "embedding_engine": "TF-IDF N-gram Cosine Similarity Vectorizer"
     }
 
-@app.get("/api/sample-jds")
+@router.get("/sample-jds")
 def get_sample_jds():
     """Retrieve pre-built sample job descriptions for easy demonstration."""
     samples = []
@@ -237,7 +240,7 @@ def get_sample_jds():
                     samples.append(json.load(f))
     return {"sample_jds": samples}
 
-@app.get("/api/sample-resumes")
+@router.get("/sample-resumes")
 def get_sample_resumes():
     """Retrieve pre-built sample candidate resumes."""
     samples = []
@@ -249,7 +252,7 @@ def get_sample_resumes():
                     samples.append(json.load(f))
     return {"sample_resumes": samples}
 
-@app.get("/api/sessions")
+@router.get("/sessions")
 def get_all_sessions(db: Session = Depends(get_db)):
     """List all recruitment screening sessions."""
     sessions = db.query(RecruitmentSession).order_by(RecruitmentSession.createdAt.desc()).all()
@@ -268,7 +271,7 @@ def get_all_sessions(db: Session = Depends(get_db)):
         })
     return {"sessions": res}
 
-@app.post("/api/sessions")
+@router.post("/sessions")
 def create_session_endpoint(req: CreateSessionRequest, db: Session = Depends(get_db)):
     """Creates or retrieves a recruitment screening session."""
     if not req.jd_text.strip():
@@ -291,7 +294,7 @@ def create_session_endpoint(req: CreateSessionRequest, db: Session = Depends(get
         "required_skills": jd.requiredSkills or []
     }
 
-@app.get("/api/sessions/{session_id}/rankings")
+@router.get("/sessions/{session_id}/rankings")
 def get_session_rankings(session_id: str, db: Session = Depends(get_db)):
     """Fetch complete candidate rankings for a specific recruitment session."""
     sess = db.query(RecruitmentSession).filter(RecruitmentSession.id == session_id).first()
@@ -341,7 +344,7 @@ def get_session_rankings(session_id: str, db: Session = Depends(get_db)):
         "rankings": rankings
     }
 
-@app.get("/api/rankings/latest")
+@router.get("/rankings/latest")
 def get_latest_rankings(db: Session = Depends(get_db)):
     """Fetch the most recent recruitment session rankings from DB."""
     latest_sess = db.query(RecruitmentSession).order_by(RecruitmentSession.createdAt.desc()).first()
@@ -360,7 +363,7 @@ def get_latest_rankings(db: Session = Depends(get_db)):
 
     return get_session_rankings(latest_sess.id, db)
 
-@app.post("/api/screen-resumes")
+@router.post("/screen-resumes")
 async def screen_resumes_endpoint(
     jd_title: str = Form(...),
     jd_text: str = Form(...),
@@ -437,7 +440,7 @@ async def screen_resumes_endpoint(
         "rankings": results
     }
 
-@app.post("/api/screen-sample-demo")
+@router.post("/screen-sample-demo")
 def screen_sample_demo(jd_id: Optional[str] = None, db: Session = Depends(get_db)):
     """1-Click Demo Endpoint: Screens built-in sample candidates against selected sample JD in a demo session."""
     jd_path = SAMPLE_JDS_DIR / "sde.json"
@@ -512,7 +515,7 @@ def screen_sample_demo(jd_id: Optional[str] = None, db: Session = Depends(get_db
         "rankings": results
     }
 
-@app.post("/api/sessions/{session_id}/clear")
+@router.post("/sessions/{session_id}/clear")
 def clear_session_endpoint(session_id: str, db: Session = Depends(get_db)):
     """Clears all candidates and rankings for the specified recruitment session."""
     sess = db.query(RecruitmentSession).filter(RecruitmentSession.id == session_id).first()
@@ -526,7 +529,7 @@ def clear_session_endpoint(session_id: str, db: Session = Depends(get_db)):
 
     return {"status": "success", "message": f"Recruitment session '{sess.sessionName}' cleared successfully."}
 
-@app.delete("/api/sessions/clear-all")
+@router.delete("/sessions/clear-all")
 def clear_all_sessions_endpoint(db: Session = Depends(get_db)):
     """Permanently clears ALL recruitment session data across the database."""
     db.query(ScreeningResult).delete()
@@ -537,10 +540,13 @@ def clear_all_sessions_endpoint(db: Session = Depends(get_db)):
 
     return {"status": "success", "message": "All recruitment screening data cleared successfully."}
 
-@app.get("/api/evaluation")
+@router.get("/evaluation")
 def run_evaluation_benchmark():
     """Runs evaluation benchmark against test dataset and returns accuracy metrics."""
     return evaluation_module.evaluate_benchmark()
+
+app.include_router(router, prefix="/api")
+app.include_router(router, prefix="")
 
 # Serve static frontend files
 FRONTEND_DIR = BASE_DIR / "frontend"
@@ -550,3 +556,4 @@ if os.path.exists(FRONTEND_DIR):
     @app.get("/")
     def read_root():
         return FileResponse(str(FRONTEND_DIR / "index.html"))
+

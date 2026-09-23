@@ -1,14 +1,16 @@
-from fastapi import FastAPI, Request
+import sys
+import os
+from pathlib import Path
 
-app = FastAPI()
+# Add project root directory to sys.path for Vercel serverless imports
+BASE_DIR = Path(__file__).resolve().parent.parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
 
-@app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-def echo_path(path: str, request: Request):
-    return {
-        "received_param_path": path,
-        "scope_path": request.scope.get("path"),
-        "raw_url": str(request.url)
-    }
+os.environ["VERCEL"] = "1"
+
+from backend.main import app
+
 
 
 

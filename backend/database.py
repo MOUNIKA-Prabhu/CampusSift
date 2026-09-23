@@ -3,20 +3,20 @@ import tempfile
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from backend.config import DATABASE_URL, BASE_DIR
+from backend.config import BASE_DIR
 
-db_url = os.getenv("DATABASE_URL")
+# 1. Check if user configured external DATABASE_URL (e.g. Postgres / Supabase)
+env_db_url = os.getenv("DATABASE_URL", "")
 
-if not db_url:
-    if os.getenv("VERCEL"):
-        temp_dir = tempfile.gettempdir()
-        db_path = os.path.join(temp_dir, "talentmatch.db")
-        db_url = f"sqlite:///{db_path}"
-    else:
-        db_url = DATABASE_URL
-
-if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
+if env_db_url and (env_db_url.startswith("postgres") or env_db_url.startswith("mysql")):
+    db_url = env_db_url.replace("postgres://", "postgresql://", 1)
+elif os.getenv("VERCEL") or os.getenv("VERCEL_ENV") or not os.access(str(BASE_DIR), os.W_OK):
+    temp_dir = tempfile.gettempdir()
+    db_path = os.path.join(temp_dir, "talentmatch.db")
+    db_url = f"sqlite:///{db_path}"
+else:
+    db_path = BASE_DIR / "talentmatch.db"
+    db_url = f"sqlite:///{db_path}"
 
 connect_args = {}
 if db_url.startswith("sqlite"):
@@ -39,5 +39,6 @@ def get_db():
         yield db
     finally:
         db.close()
+
 
 

@@ -2,19 +2,16 @@
   "version": 2,
   "functions": {
     "api/index.py": {
-      "includeFiles": [
-        "sample_data/**",
-        "backend/**",
-        "frontend/**"
-      ]
+      "includeFiles": "sample_data/**"
     }
   },
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "destination": "/api/index.py"
     }
   ]
 }
+
 
 

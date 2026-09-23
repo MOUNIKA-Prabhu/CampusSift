@@ -1,21 +1,12 @@
 import json
+import urllib.request
+import urllib.parse
 from typing import Dict, Any, List, Optional
 from backend.config import GEMINI_API_KEY, OPENAI_API_KEY
 
 class LLMService:
     def __init__(self):
-        self.gemini_available = False
-        self.genai = None
-        
-        if GEMINI_API_KEY:
-            try:
-                import google.generativeai as genai
-                genai.configure(api_key=GEMINI_API_KEY)
-                self.genai = genai
-                self.gemini_available = True
-                print("Google Gemini API configured successfully.")
-            except Exception as e:
-                print(f"Gemini initialization warning: {e}")
+        self.gemini_available = bool(GEMINI_API_KEY.strip()) if GEMINI_API_KEY else False
 
     def generate_candidate_explanation(
         self,
@@ -27,7 +18,7 @@ class LLMService:
     ) -> str:
         """
         Generates explainable rationale for candidate match score.
-        Uses Gemini API if available, otherwise uses deterministic rule-based template.
+        Uses Gemini REST API if available, otherwise uses deterministic rule-based template.
         """
         score_pct = int(round(match_score * 100))
 
@@ -46,12 +37,19 @@ class LLMService:
                 Explain why the candidate received this score based on their matching and missing skills.
                 Keep it direct and objective.
                 """
-                model = self.genai.GenerativeModel('gemini-1.5-flash')
-                response = model.generate_content(prompt)
-                if response and response.text:
-                    return response.text.strip()
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY.strip()}"
+                payload = json.dumps({
+                    "contents": [{"parts": [{"text": prompt}]}]
+                }).encode("utf-8")
+                
+                req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                    if text:
+                        return text
             except Exception as e:
-                print(f"LLM API call failed or rate-limited: {e}. Falling back to rule-based explanation.")
+                print(f"LLM API REST call failed or rate-limited: {e}. Falling back to rule-based explanation.")
 
         # Fallback Explainability Template Engine
         return self._generate_fallback_explanation(candidate_name, score_pct, matching_skills, missing_skills, jd_title)
@@ -83,3 +81,4 @@ class LLMService:
 
 # Singleton instance
 llm_service = LLMService()
+

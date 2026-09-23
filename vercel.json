@@ -4,23 +4,17 @@
     "api/index.py": {
       "includeFiles": [
         "sample_data/**",
-        "backend/**"
+        "backend/**",
+        "frontend/**"
       ]
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/static/(.*)",
-      "dest": "frontend/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "frontend/index.html"
+      "source": "/(.*)",
+      "destination": "/api/index.py"
     }
   ]
 }
+
 

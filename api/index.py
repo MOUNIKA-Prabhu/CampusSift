@@ -1,15 +1,14 @@
 import sys
 import os
 from pathlib import Path
+from fastapi import FastAPI
 
-# Add project root directory to sys.path for Vercel serverless imports
-BASE_DIR = Path(__file__).resolve().parent.parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
+app = FastAPI()
 
-os.environ["VERCEL"] = "1"
+@app.get("/api/health")
+def health():
+    return {"status": "healthy", "message": "Vercel Python serverless engine is operating normally"}
 
-from backend.main import app
 
 
 

@@ -1,13 +1,15 @@
-import sys
-import os
-from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 app = FastAPI()
 
-@app.get("/api/health")
-def health():
-    return {"status": "healthy", "message": "Vercel Python serverless engine is operating normally"}
+@app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
+def echo_path(path: str, request: Request):
+    return {
+        "received_param_path": path,
+        "scope_path": request.scope.get("path"),
+        "raw_url": str(request.url)
+    }
+
 
 
 

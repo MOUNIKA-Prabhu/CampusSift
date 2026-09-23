@@ -11,5 +11,10 @@ os.environ["VERCEL"] = "1"
 
 from backend.main import app
 
-handler = app
+try:
+    from mangum import Mangum
+    handler = Mangum(app, lifespan="off")
+except Exception:
+    handler = app
+
 

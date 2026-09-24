@@ -13,6 +13,24 @@ let allSessionsList = [];
 
 const MAX_CLIENT_BATCH_BYTES = 10 * 1024 * 1024; // 10 MB total limit
 
+// Helper for resilient Vercel serverless & local API calls
+async function safeApiFetch(endpoint, options = {}) {
+    try {
+        let res = await fetch(endpoint, options);
+        if (res.status === 404 && endpoint.includes("/api/")) {
+            const fallbackPath = endpoint.replace("/api/", "/");
+            res = await fetch(fallbackPath, options);
+        }
+        return res;
+    } catch (e) {
+        if (endpoint.includes("/api/")) {
+            const fallbackPath = endpoint.replace("/api/", "/");
+            return await fetch(fallbackPath, options);
+        }
+        throw e;
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initNavigation();
     initDropzone();
@@ -48,7 +66,7 @@ function switchTab(tabId) {
 // Health Check Endpoint
 async function checkHealth() {
     try {
-        const res = await fetch("/api/health");
+        const res = await safeApiFetch("/api/health");
         const data = await res.json();
         const badgeText = document.getElementById("engineStatusText");
         const badgeDot = document.querySelector("#engineStatusBadge .status-dot");
@@ -86,7 +104,7 @@ function updateModeUI() {
 // Load Stored Sessions
 async function loadSessionsList() {
     try {
-        const res = await fetch("/api/sessions");
+        const res = await safeApiFetch("/api/sessions");
         if (!res.ok) return;
         const data = await res.json();
         allSessionsList = data.sessions || [];
@@ -114,7 +132,7 @@ async function loadSessionsList() {
 async function switchSession(sessionId) {
     if (!sessionId) return;
     try {
-        const res = await fetch(`/api/sessions/${sessionId}/rankings`);
+        const res = await safeApiFetch(`/api/sessions/${sessionId}/rankings`);
         if (!res.ok) return;
         const data = await res.json();
         
@@ -166,7 +184,7 @@ async function loadLatestRankings() {
     }
 
     try {
-        const res = await fetch("/api/rankings/latest");
+        const res = await safeApiFetch("/api/rankings/latest");
         if (!res.ok) return;
         const data = await res.json();
         if (data && data.rankings && data.rankings.length > 0) {
@@ -211,8 +229,8 @@ function renderEmptyRankingState() {
 async function loadSampleData() {
     try {
         const [jdRes, resRes] = await Promise.all([
-            fetch("/api/sample-jds"),
-            fetch("/api/sample-resumes")
+            safeApiFetch("/api/sample-jds"),
+            safeApiFetch("/api/sample-resumes")
         ]);
 
         const jdData = await jdRes.json();
@@ -473,7 +491,7 @@ async function processScreening() {
     });
 
     try {
-        const res = await fetch("/api/screen-resumes", {
+        const res = await safeApiFetch("/api/screen-resumes", {
             method: "POST",
             body: formData
         });
@@ -513,7 +531,7 @@ async function runOneClickDemo() {
     document.getElementById("resultsContent").style.display = "none";
 
     try {
-        const res = await fetch("/api/screen-sample-demo", { method: "POST" });
+        const res = await safeApiFetch("/api/screen-sample-demo", { method: "POST" });
         if (!res.ok) {
             const errMsg = await parseResponseError(res, "Demo failed");
             throw new Error(errMsg);
@@ -981,7 +999,7 @@ async function executeClearSession() {
     if (!currentSessionId) return;
 
     try {
-        const res = await fetch(`/api/sessions/${currentSessionId}/clear`, { method: "POST" });
+        const res = await safeApiFetch(`/api/sessions/${currentSessionId}/clear`, { method: "POST" });
         if (!res.ok) {
             const err = await res.json();
             throw new Error(err.detail || "Clear session failed");
@@ -1012,7 +1030,7 @@ function closeClearAllModal() {
 async function executeClearAll() {
     closeClearAllModal();
     try {
-        const res = await fetch("/api/sessions/clear-all", { method: "DELETE" });
+        const res = await safeApiFetch("/api/sessions/clear-all", { method: "DELETE" });
         if (!res.ok) throw new Error("Clear all failed");
 
         if (window.FirebaseService) {
@@ -1032,7 +1050,7 @@ async function executeClearAll() {
 // Model Evaluation Benchmark Data
 async function loadEvaluationData() {
     try {
-        const res = await fetch("/api/evaluation");
+        const res = await safeApiFetch("/api/evaluation");
         const data = await res.json();
 
         if (data.total_evaluated_pairs !== undefined) {
